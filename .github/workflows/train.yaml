@@ -53,4 +53,6 @@ jobs:
           echo "## Metrics: workflow vs. main" >> report.md
           git fetch --prune
           dvc metrics diff main --md >> report.md
+          echo -e "\n ## ROC Graph" >> report.md
+          echo "![](./ROC.png)" >> report.md
           cml comment create report.md
