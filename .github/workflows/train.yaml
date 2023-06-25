@@ -43,9 +43,6 @@ jobs:
       - uses: iterative/setup-cml@v1
       - uses: iterative/setup-dvc@v1
       - name: Train model
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
           pip install -r requirements.txt  # Install dependencies
           dvc repro                        # Reproduce pipeline
@@ -55,6 +52,5 @@ jobs:
         run: |
           echo "## Metrics: workflow vs. main" >> report.md
           git fetch --prune
-
-          dvc metrics diff main --show-md >> report.md
+          dvc metrics diff main --md >> report.md
           cml comment create report.md
