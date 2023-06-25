@@ -46,7 +46,7 @@ jobs:
         run: |
           pip install -r requirements.txt  # Install dependencies
           dvc repro                        # Reproduce pipeline
-      - name: Create CML report
+      - name: Create CML reporting
         env:
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
