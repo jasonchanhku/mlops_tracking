@@ -1,0 +1,26 @@
+name: mlops-classification
+on: [push]
+jobs:
+  classification-job:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: iterative/setup-cml@v1
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '16'
+      - name: Train model
+        env:
+          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Your ML workflow goes here
+          pip install -r requirements.txt
+          dvc repro
+          
+          git fetch --prune
+          
+          dvc metrics diff --show-md master > report.md
+          echo -e "\n ## ROC Graph" >> report.md
+          echo "![](./ROC.png)" >> report.md
+          
+          cml comment create report.md
