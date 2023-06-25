@@ -1,15 +1,12 @@
-import os
-import wget
-import zipfile
+
+import pandas as pd
 
 # Download the zipped dataset
-url = 'https://storage.googleapis.com/trainingdata-mlops/data.zip'
-zip_name = "data.zip"
-wget.download(url, zip_name)
+train = pd.read_csv("https://raw.githubusercontent.com/jasonchanhku/mlops_tracking/main/data/train.csv")
+test = pd.read_csv("https://raw.githubusercontent.com/jasonchanhku/mlops_tracking/main/data/test.csv")
 
-# Unzip it and standardize the .csv filename
-with zipfile.ZipFile(zip_name, "r") as zip_ref:
-	zip_ref.extractall()
 
-os.remove(zip_name)
+train.to_csv("./train.csv", index=False)
+test.to_csv("./test.csv", index=False)
+
 print('\nAll files are being extracted.')
